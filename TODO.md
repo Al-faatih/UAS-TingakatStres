@@ -1,0 +1,2 @@
+- [x] Remove format_func from kafein selectbox in app.py to display only numbers (0,1,2)
+- [x] Remove format_func from olahraga selectbox in app.py to display only numbers (0,1,2)
