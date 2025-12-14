@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.model_selection import train_test_split
 
@@ -38,6 +39,18 @@ data = {
                  2,0,1,0,2,0,2,1,0,1,2,0,1,0,2,1,0,2,1,0,
                  0,2,1,0,2,0,1,0,1,0],
 }
+
+# Load additional data from Excel if available
+excel_file = "UAS SPK TINGKAT STREs.xlsx"
+if os.path.exists(excel_file):
+    try:
+        df_excel = pd.read_excel(excel_file, skiprows=3, header=0)
+        df_excel = df_excel[['nama', 'Jam Tidur', 'Jam Belajar', 'Kafein', 'Olahraga']].rename(columns={'nama': 'Nama', 'Jam Tidur': 'Jam_Tidur', 'Jam Belajar': 'Jam_Belajar'})
+        # Append to existing data
+        for col in data.keys():
+            data[col].extend(df_excel[col].tolist())
+    except Exception as e:
+        st.warning(f"Gagal memuat data dari Excel: {e}")
 
 df = pd.DataFrame(data)
 
